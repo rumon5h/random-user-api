@@ -53,10 +53,49 @@ app.post("/user/save", (req, res) => {
         res.end();
     } else {
         users.push(req.body);
+        console.log(users);
         res.write("Data has been saved");
         res.end();
     }
 });
+
+// Update a random user
+
+app.patch('/user/update', (req, res) => {
+
+    const data = req.body;
+    const query = req.query;
+    
+    const i = users.findIndex(user => {
+        return user.id == query.id;
+    });
+
+    if (i == -1) {
+        res.write("Id not found");
+        res.end();
+    } else {
+        if (data.name != undefined) {
+            users[i].name = data.name;
+        }
+        if (data.gender != undefined) {
+            users[i].gender = data.gender;
+        }
+        if (data.address != undefined) {
+            users[i].address = data.address;
+        }
+        if (data.contact != undefined) {
+            users[i].contact = data.contact;
+        }
+        if (data.photoUrl != undefined) {
+            users[i].photoUrl = data.photoUrl;
+        }
+
+        res.write("Successfully Updated User");
+        res.end();
+    }
+});
+
+
 
 app.all("*", (req, res) => {
   res.send("No route found.");
