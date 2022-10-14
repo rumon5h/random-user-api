@@ -30,6 +30,21 @@ app.get("/user/random", (req, res) => {
   });
 });
 
+
+// Get all random users
+
+app.get("/user/all", (req, res) => {
+  fs.readFile("users.json", (error, data) => {
+    if (error) {
+      res.write("Internal server error.");
+      res.end();
+    }else{
+        res.write(data);
+        res.end();
+    }
+    })
+})
+
 app.listen(PORT, () => {
   console.log("Listening to the port", PORT);
 });
