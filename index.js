@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const fs = require("fs");
+const users = require("./users.json");
 
 app.use(cors());
 app.use(express.json());
@@ -42,6 +43,19 @@ app.get("/user/all", (req, res) => {
       res.end();
     }
   });
+});
+
+// Post a random user
+
+app.post("/user/save", (req, res) => {
+    if (req.body.id == undefined || req.body.gender == undefined || req.body.name == undefined || req.body.contact == undefined || req.body.address == undefined || req.body.photoUrl == undefined) {
+        res.write("A value is missing");
+        res.end();
+    } else {
+        users.push(req.body);
+        res.write("Data has been saved");
+        res.end();
+    }
 });
 
 app.all("*", (req, res) => {
