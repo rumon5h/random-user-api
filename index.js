@@ -30,7 +30,6 @@ app.get("/user/random", (req, res) => {
   });
 });
 
-
 // Get all random users
 
 app.get("/user/all", (req, res) => {
@@ -38,12 +37,16 @@ app.get("/user/all", (req, res) => {
     if (error) {
       res.write("Internal server error.");
       res.end();
-    }else{
-        res.write(data);
-        res.end();
+    } else {
+      res.write(data);
+      res.end();
     }
-    })
-})
+  });
+});
+
+app.all("*", (req, res) => {
+  res.send("No route found.");
+});
 
 app.listen(PORT, () => {
   console.log("Listening to the port", PORT);
