@@ -71,7 +71,7 @@ app.patch('/user/update', (req, res) => {
     });
 
     if (i == -1) {
-        res.write("Id not found");
+        res.write("User not found!");
         res.end();
     } else {
         if (data.name != undefined) {
@@ -95,7 +95,23 @@ app.patch('/user/update', (req, res) => {
     }
 });
 
+// Delete a random user
 
+app.delete('/user/delete', (req, res) => {
+    const query = req.query;
+    const i = users.findIndex(user => {
+        return user.id == query.id;
+    });
+
+    if (i == -1) {
+        res.write("User not found");
+        res.end();
+    } else {
+        users.splice(i, 1);
+        res.write("Successfully Deleted the user!");
+        res.end();
+    }
+})
 
 app.all("*", (req, res) => {
   res.send("No route found.");
